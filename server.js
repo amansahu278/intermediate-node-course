@@ -81,12 +81,12 @@ app.route('/users/:id')
         )
       } else if (!data){
         res.json({
-          error: true,
+          success: false,
           message: "Not Found"
         })
       } else {
         res.json({
-          error: false,
+          success: true,
           data: data
         })
       }
@@ -96,4 +96,27 @@ app.route('/users/:id')
 // DELETE
 .delete((req,res)=>{
   // User.findByIdAndDelete()
+  User.findByIdAndDelete(
+    req.params.id,
+    (err, data) => {
+      if(err){
+          res.json(
+            {
+              success: false,
+              message: err
+            }
+          )
+      } else if(!data){
+        res.json({
+          success: false,
+          message: "Not found"
+        })
+      } else {
+        res.json({
+          success: true,
+          data: data
+        })
+      }
+    }
+  )
 })
